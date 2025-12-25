@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Portfolio</title>
     <style>
       * {
@@ -648,6 +649,88 @@
         color: #2563eb;
       }
 
+      .social-links {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column; /* Aligne les comptes les uns sous les autres */
+        gap: 15px; /* Espace entre chaque ligne */
+      }
+
+      .social-item {
+        display: flex;
+        align-items: center; /* Aligne verticalement l'icône et le texte */
+        text-decoration: none;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        transition: transform 0.2s ease;
+      }
+
+      .social-item i {
+        font-size: 24px; /* Taille de l'icône */
+        margin-right: 12px; /* Espace entre l'icône et ton nom */
+        width: 30px; /* Largeur fixe pour que le texte soit aligné */
+        text-align: center;
+      }
+
+/* Couleurs spécifiques au survol */
+      .social-item:hover {
+        transform: translateX(10px); /* Petit effet de mouvement */
+        color: #1877F2; /* Bleu Facebook par défaut au survol */
+      }
+
+      .social-item:hover i {
+        color: #1877F2;
+      }
+
+      /* Style de base (Ordinateur) */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background: #333;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li { margin-left: 20px; }
+
+      .menu-toggle {
+        display: none; /* CACHÉ SUR ORDINATEUR */
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+/* --- VERSION MOBILE (moins de 768px) --- */
+    @media screen and (max-width: 768px) {
+      .menu-toggle {
+        display: block; /* ON MONTRE LES 3 BARRES */
+      }
+
+        .nav-links {
+          display: none;
+        flex-direction: column;
+        width: 50%;
+          position: absolute;
+          top: 60px;
+          left: 50%;
+          background: #1877F2;
+          text-align: center;
+          font-family: cambria;
+        }
+
+  /* Quand on ajoute la classe "active" via JS */
+        .nav-links.active {
+            display: flex;
+          }
+
+        .nav-links li { padding: 15px 0; margin: 0; }
+      }
+
       @media (max-width: 900px) {
         .hero {
           grid-template-columns: minmax(0, 1fr);
@@ -771,7 +854,10 @@
     <header>
       <nav class="nav">
         <div class="logo">💻💡</div>
-        <div class="nav-links">
+        <div class="menu-toggle" id="mobile-menu">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="nav-links" id="nav-list">
           <a href="#accueil">Accueil</a>
           <a href="#apropos">À propos</a>
           <a href="#certifications">Certifications</a>
@@ -817,7 +903,6 @@
               Disponible pour de nouveaux projets
             </div>
           </div>
-          <p >Dans le noir je brille avec la lumiere de <br>mon ordinateur car je respire le code</p>
         </div>
       </section>
 
@@ -1091,9 +1176,7 @@
         </p>
 
         <div class="contact-grid">
-          <form method="post"
-            onsubmit="event.preventDefault(); alert('Le formulaire est statique pour le moment. On pourra le connecter à ton email ou un service plus tard.');"
-          >
+          <form id="monFormulaire" action="mailto:ntiamajoseph1302@gmail.com" method="post" enctype="text/plain">
             <div>
               <label for="name">Nom / Prénom</label>
               <input id="name" type="text" placeholder="Ton nom" />
@@ -1113,7 +1196,7 @@
                 placeholder="Parle-moi de ton projet ou de ton besoin..."
               ></textarea>
             </div>
-            <button class="btn-primary" type="submit">
+            <button class="btn-primary" type="submit" onclick="viderFormulaire()">
               Envoyer le message
             </button>
           </form>
@@ -1124,31 +1207,57 @@
               réseaux.
             </p>
             <ul class="contact-list">
-              <li>
-                <div class="contact-label">Email</div>
-                <div>ntiamajoseph1302@gmail.com</div>
-              </li>
-              <li>
-                <div class="contact-label">LinkedIn</div>
-                <div>www.linkedin.com/in/joseph-ntiama</div>
-              </li>
-              <li>
-                <div class="contact-label">Whatsapp</div>
-                <div>+243 898 767 041</div>
-              </li>
-              <li>
-                <div class="contact-label">Facebook</div>
-                <div>Joseph NTIAMA</div>
-              </li>
-              <li>
-                <div class="contact-label">Instagram</div>
-                <div>joseph_ntiama</div>
-              </li>
-
-              <li>
-                <div class="contact-label">TELEPHONE</div>
-                <div>+243 995 200 942</div>
-              </li>
+              <div class="social-links">
+                <li>
+                  <div>
+                    <a href="mailto:ntiamajoseph1302@gmail.com" class="social-item gmail">
+                      <i class="fa-solid fa-envelope"></i>
+                      <span>ntiamajoseph1302@gmail.com</span>
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <div class="social-links">
+                    <a href="https://facebook.com/joseph.ntiama.94" target="_blank" class="social-item">
+                      <i class="fa-brands fa-facebook"></i>
+                      <span>Joseph NTIAMA</span>
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <a href="https://www.linkedin.com/in/joseph-ntiama" target="_blank" class="social-item">
+                      <i class="fa-brands fa-linkedin"></i>
+                      <span>Joseph NTIAMA</span>
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <a href="https://instagram.com/ton-pseudo" target="_blank" class="social-item">
+                      <i class="fa-brands fa-instagram"></i>
+                      <span>@Joseph_NTIAMA</span>
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <a href="https://whatsapp.com/ton-pseudo" target="_blank" class="social-item">
+                      <i class="fa-brands fa-whatsapp"></i>
+                      <span>+243 898 767 041</span>
+                    </a>
+                  </div>
+                </li>
+  
+                <li>
+                  <div>
+                    <a href="tel:+243995200942" class="social-item phone">
+                      <i class="fa-solid fa-phone"></i>
+                      <span>+243 995 200 942</span>
+                    </a>
+                  </div>
+                </li>
+              </div>
             </ul>  
           </div>
         </div>
@@ -1157,8 +1266,11 @@
 
     <footer>
       <div class="footer-inner">
-        <span>© <span id="year"></span> Joseph NTIAMA. Tous droits réservés.</span>
+        <span>
+          même dans le noir⚫ je brille💡 grâce à la lumière de mon ordinateur🖥️ car je respire👨‍💻 les codes🪄 <br>
+          © <span id="year"></span> Joseph NTIAMA. Tous droits réservés.</span>
         <div class="footer-links">
+          💻💡
           <a href="#accueil">Haut de page</a>
           <a href="#projets">Projets</a>
           <a href="#contact">Contact</a>
@@ -1167,39 +1279,83 @@
     </footer>
 
     <script>
-      document.getElementById("year").textContent =
-        new Date().getFullYear().toString();
-
+      // 1. Gestion de l'année automatique dans le footer
+      const yearElement = document.getElementById("year");
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear().toString();
+      }
+    
+      // 2. Navigation des Certifications (Carousel)
       function scrollCertifications(direction) {
         const grid = document.getElementById("certificationGrid");
-        const cardWidth = grid.querySelector(".certification-card").offsetWidth;
-        const gap = 24; // 1.5rem = 24px
-        const scrollAmount = cardWidth + gap;
-        
-        grid.scrollBy({
-          left: direction * scrollAmount,
-          behavior: "smooth"
-        });
-
-        // Mettre à jour l'état des boutons
-        updateNavButtons();
+        const card = grid.querySelector(".certification-card");
+        if (card) {
+          const cardWidth = card.offsetWidth;
+          const gap = 24; // 1.5rem
+          const scrollAmount = cardWidth + gap;
+          
+          grid.scrollBy({
+            left: direction * scrollAmount,
+            behavior: "smooth"
+          });
+        }
       }
-
+    
       function updateNavButtons() {
         const grid = document.getElementById("certificationGrid");
         const prevBtn = document.querySelector(".certification-nav-btn.prev");
         const nextBtn = document.querySelector(".certification-nav-btn.next");
         
-        // Désactiver le bouton précédent si on est au début
-        prevBtn.disabled = grid.scrollLeft <= 0;
-        
-        // Désactiver le bouton suivant si on est à la fin
-        nextBtn.disabled = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 10;
+        if (grid && prevBtn && nextBtn) {
+          prevBtn.disabled = grid.scrollLeft <= 0;
+          nextBtn.disabled = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 10;
+        }
       }
-
-      // Mettre à jour les boutons au chargement et au scroll
-      window.addEventListener("load", updateNavButtons);
-      document.getElementById("certificationGrid").addEventListener("scroll", updateNavButtons);
+    
+      // Écouteurs pour les certificats
+      const certGrid = document.getElementById("certificationGrid");
+      if (certGrid) {
+        window.addEventListener("load", updateNavButtons);
+        certGrid.addEventListener("scroll", updateNavButtons);
+      }
+    
+      // 3. Gestion du Menu Mobile (Burger)
+      const menuToggle = document.getElementById('mobile-menu');
+      const navLinks = document.getElementById('nav-list');
+    
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+          // Ouvre/Ferme le menu
+          navLinks.classList.toggle('active');
+          
+          // Transforme l'icône (Barres <=> X)
+          const icon = menuToggle.querySelector('i');
+          if (icon) {
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+          }
+        });
+    
+        // Fermer le menu automatiquement quand on clique sur un lien
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            if (icon) {
+              icon.classList.add('fa-bars');
+              icon.classList.remove('fa-xmark');
+            }
+          });
+        });
+      }
+    
+      // 4. Reset du formulaire après envoi
+      function viderFormulaire() {
+        setTimeout(function() {
+          const form = document.getElementById("monFormulaire");
+          if (form) form.reset();
+        }, 500); // 500ms pour laisser le temps à l'app mail de s'ouvrir
+      }
     </script>
   </body>
 </html>
