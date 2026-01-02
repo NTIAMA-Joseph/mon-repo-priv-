@@ -6,6 +6,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Portfolio</title>
     <style>
+      /* ---------- Styles principaux ----------
+         Organisation:
+         - Reset & base
+         - Body / typographie
+         - Liens / header / navigation
+         - Hero (accueil)
+         - About / cartes
+         - Grid / cards / certifications
+         - Contact / footer
+      */
       * {
         box-sizing: border-box;
         margin: 0;
@@ -25,6 +35,7 @@
         text-decoration: none;
       }
 
+      /* Header - barre de navigation sticky en haut */
       header {
         position: sticky;
         top: 0;
@@ -87,6 +98,7 @@
         margin-bottom: 4.5rem;
       }
 
+      /* Hero (Accueil) - titre, sous-texte, tags et photo */
       .hero {
         display: grid;
         grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
@@ -101,7 +113,7 @@
         margin-bottom: 1rem;
       }
 
-      .hero-title span {
+      .hero-name {
         background: #2563eb;
         background-clip: text;
         -webkit-background-clip: text;
@@ -236,6 +248,7 @@
         margin-bottom: 1.75rem;
       }
 
+      /* À propos - texte descriptif et cartes de résumé */
       .about-grid {
         display: grid;
         grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
@@ -301,6 +314,7 @@
         background: #2563eb;
       }
 
+      /* Cartes récapitulatives dans la section À propos */
       .about-cards {
         display: grid;
         gap: 0.75rem;
@@ -327,6 +341,7 @@
         color: #0f172a;
       }
 
+      /* Grilles réutilisables pour projets et autres listes */
       .grid {
         display: grid;
         gap: 1.25rem;
@@ -401,6 +416,7 @@
         color: #0f172a;
       }
 
+      /* Certifications - carousel horizontal */
       .certification-container {
         position: relative;
         width: 100%;
@@ -563,6 +579,7 @@
         text-decoration: underline;
       }
 
+      /* Contact - formulaire et informations de contact */
       .contact-grid {
         display: grid;
         grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
@@ -621,6 +638,7 @@
         color: #475569;
       }
 
+      /* Footer - bas de page avec liens et copyright */
       footer {
         border-top: 1px solid #e5e7eb;
         padding: 1.4rem 1.5rem 1.8rem;
@@ -848,9 +866,69 @@
           height: 190px;
         }
       }
+      /* Animations: apparitions et micro-interactions
+         - Variables:
+           --accent : couleur principale utilisée pour les accents visuels
+         - Classes utilitaires:
+           .fade-up  : élément apparaissant avec translation verticale
+           .fade-in  : élément n'apparaissant qu'en opacité
+         - Animation float: micro-mouvement appliqué à la photo hero
+         - Respecter `prefers-reduced-motion` pour accessibilité
+      */
+      /* Couleur d'accent utilisée dans plusieurs composants */
+      :root { --accent: #2563eb; }
+
+      /* Apparition en glissement vers le haut + fondu
+         - ajouter la classe `animated` déclenche la transition
+         - utile pour staggered entrance (apparition échelonnée)
+      */
+      .fade-up { opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.2,.8,.2,1); }
+      .fade-up.animated { opacity: 1; transform: translateY(0); }
+
+      /* Simple fondu (opacité) pour éléments qui n'ont pas besoin de translation */
+      .fade-in { opacity: 0; transition: opacity 0.8s ease; }
+      .fade-in.animated { opacity: 1; }
+
+
+      /* Légère oscillation verticale pour donner de la vie à la photo */
+      @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+        100% { transform: translateY(0); }
+      }
+
+      /* Photo hero: couvre son conteneur et a un zoom au survol
+         - transition sur `img` pour rendre le hover fluide
+         - la classe `animated` déclenche l'animation continue `float`
+         - `will-change` aide la performance pour les transformations fréquentes
+      */
+      .hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; will-change: transform; }
+      .hero-photo.animated { animation: float 4s ease-in-out infinite; }
+      .hero-photo:hover img { transform: scale(1.04); }
+
+      /* Animations de texte: slide-in gauche/droite pour mettre en valeur les titres */
+      .slide-left { opacity: 0; transform: translateX(-18px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.2,.8,.2,1); }
+      .slide-left.animated { opacity: 1; transform: translateX(0); }
+
+      .slide-right { opacity: 0; transform: translateX(18px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.2,.8,.2,1); }
+      .slide-right.animated { opacity: 1; transform: translateX(0); }
+
+      /* Tags dans le hero: apparition échelonnée et léger levé */
+      .hero-tags .tag { opacity: 0; transform: translateY(8px) scale(0.99); transition: opacity 0.45s ease, transform 0.45s ease; }
+      .hero-tags .tag.animated { opacity: 1; transform: translateY(0) scale(1); }
+
+      /* Micro-interaction sur les images de certification : léger soulèvement + ombre */
+      .certification-image { transition: transform 0.28s ease, box-shadow 0.28s ease; }
+      .certification-image:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 18px 40px rgba(15,23,42,0.12); }
+
+      /* Respecter la préférence de l'utilisateur pour réduire les animations */
+      @media (prefers-reduced-motion: reduce) {
+        .fade-up, .fade-in, .hero-photo.animated, .certification-image { transition: none !important; animation: none !important; }
+      }
     </style>
   </head>
-  <body>
+    <body>
+    <!-- Header: barre de navigation principale (logo, menu mobile, liens) -->
     <header>
       <nav class="nav">
         <div class="logo">💻💡</div>
@@ -868,10 +946,12 @@
     </header>
 
     <main>
-      <section id="accueil" class="hero">
+    <!-- Section Accueil (Hero) -->
+    <section id="accueil" class="hero">
         <div>
           <h1 class="hero-title">
-            Bienvenue dans mon portfolio, moi c'est <span>Joseph NTIAMA</span>
+            <span class="hero-line">Bienvenue dans mon portfolio,</span>
+            <span class="hero-line">moi c'est <span class="hero-name">Joseph NTIAMA</span></span>
           </h1>
           <p class="hero-subtitle">
             Développeur Python et front-end
@@ -880,6 +960,8 @@
           <div class="hero-tags">
             <span class="tag">Python</span>
             <span class="tag">HTML / CSS</span>
+            <span class="tag">Java Script</span>
+            <span class="tag">Cyber Sécurité</span>
             <span class="tag">Marketing Digital</span>
           </div>
 
@@ -906,6 +988,7 @@
         </div>
       </section>
 
+      <!-- Section À propos -->
       <section id="apropos">
         <h2 class="section-title">À propos</h2>
         <p class="section-subtitle">
@@ -989,6 +1072,26 @@
                       <span class="level-bar"></span>
                     </span>
                   </span>
+                  <span class="language-item">
+                    <span>Cyber Sécurité</span>
+                    <span class="language-level">
+                      <span class="level-bar filled"></span>
+                      <span class="level-bar filled"></span>
+                      <span class="level-bar"></span>
+                      <span class="level-bar"></span>
+                      <span class="level-bar"></span>
+                    </span>
+                  </span>
+                  <span class="language-item">
+                    <span>Marketing Digital</span>
+                    <span class="language-level">
+                      <span class="level-bar filled"></span>
+                      <span class="level-bar filled"></span>
+                      <span class="level-bar filled"></span>
+                      <span class="level-bar filled"></span>
+                      <span class="level-bar"></span>
+                    </span>
+                  </span>
                 </div>
               </li>
             </ul>
@@ -1001,12 +1104,13 @@
             </div>
             <div class="about-card">
               <span class="about-card-label">Objectif</span>
-              <span class="about-card-value">Développer mes compétences en python</span>
+              <span class="about-card-value">Développer mes compétences en developpement informatique</span>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Section Certifications (carousel) -->
       <section id="certifications">
         <h2 class="section-title">Certifications</h2>
         <p class="section-subtitle">
@@ -1112,6 +1216,7 @@
         </div>
       </section>
 
+      <!-- Section Projets sélectionnés -->
       <section id="projets">
         <h2 class="section-title">Projets sélectionnés</h2>
         <p class="section-subtitle">
@@ -1169,6 +1274,7 @@
         </div>
       </section>
 
+      <!-- Section Contact (formulaire + réseaux) -->
       <section id="contact">
         <h2 class="section-title">Contact</h2>
         <p class="section-subtitle">
@@ -1278,65 +1384,83 @@
       </div>
     </footer>
 
+    <!-- Scripts: logique interactive (année, carousel, menu mobile, formulaire, animations) -->
     <script>
-      // 1. Gestion de l'année automatique dans le footer
+      /* --------------------------------------------
+         1) Année automatique (footer)
+            - Remplit dynamiquement l'élément #year avec l'année courante
+            - Protège contre l'absence de l'élément via un test
+      -------------------------------------------- */
       const yearElement = document.getElementById("year");
       if (yearElement) {
         yearElement.textContent = new Date().getFullYear().toString();
       }
-    
-      // 2. Navigation des Certifications (Carousel)
+
+      /* --------------------------------------------
+         2) Carousel des certifications
+            - `scrollCertifications(direction)` : fait défiler la grille
+              en fonction de la largeur d'une carte + gap
+            - `direction` vaut 1 (suivant) ou -1 (précédent)
+            - On calcule `card.offsetWidth` pour s'adapter au responsive
+      -------------------------------------------- */
       function scrollCertifications(direction) {
         const grid = document.getElementById("certificationGrid");
+        if (!grid) return; // sécurité
+
         const card = grid.querySelector(".certification-card");
-        if (card) {
-          const cardWidth = card.offsetWidth;
-          const gap = 24; // 1.5rem
-          const scrollAmount = cardWidth + gap;
-          
-          grid.scrollBy({
-            left: direction * scrollAmount,
-            behavior: "smooth"
-          });
-        }
+        if (!card) return;
+
+        // largeur de la carte + estimation du gap entre les cartes
+        const cardWidth = card.offsetWidth;
+        const gap = 24; // correspond à ~1.5rem dans le CSS
+        const scrollAmount = cardWidth + gap;
+
+        // scrollBy permet un défilement fluide et contrôlé
+        grid.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
       }
-    
+
+      /* Mise à jour de l'état des boutons Prev/Next en fonction du scroll */
       function updateNavButtons() {
         const grid = document.getElementById("certificationGrid");
         const prevBtn = document.querySelector(".certification-nav-btn.prev");
         const nextBtn = document.querySelector(".certification-nav-btn.next");
-        
-        if (grid && prevBtn && nextBtn) {
-          prevBtn.disabled = grid.scrollLeft <= 0;
-          nextBtn.disabled = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 10;
-        }
+        if (!grid || !prevBtn || !nextBtn) return;
+
+        // Désactiver prev si on est tout à gauche, next si on est tout à droite
+        prevBtn.disabled = grid.scrollLeft <= 0;
+        nextBtn.disabled = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 10;
       }
-    
-      // Écouteurs pour les certificats
+
+      // Attacher les écouteurs une fois le DOM chargé
       const certGrid = document.getElementById("certificationGrid");
       if (certGrid) {
         window.addEventListener("load", updateNavButtons);
         certGrid.addEventListener("scroll", updateNavButtons);
       }
-    
-      // 3. Gestion du Menu Mobile (Burger)
+
+      /* --------------------------------------------
+         3) Menu Mobile (burger)
+            - Bascule la classe `active` sur la liste de navigation
+            - Remplace l'icône entre 'bars' et 'xmark'
+            - Ferme le menu automatiquement quand on clique sur un lien
+      -------------------------------------------- */
       const menuToggle = document.getElementById('mobile-menu');
       const navLinks = document.getElementById('nav-list');
-    
+
       if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
-          // Ouvre/Ferme le menu
+          // Toggle visible/invisible du menu (mobile)
           navLinks.classList.toggle('active');
-          
-          // Transforme l'icône (Barres <=> X)
+
+          // Changement visuel de l'icône pour indiquer l'état
           const icon = menuToggle.querySelector('i');
           if (icon) {
             icon.classList.toggle('fa-bars');
             icon.classList.toggle('fa-xmark');
           }
         });
-    
-        // Fermer le menu automatiquement quand on clique sur un lien
+
+        // Ferme le menu et restaure l'icône quand un lien est cliqué
         navLinks.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
             navLinks.classList.remove('active');
@@ -1348,14 +1472,108 @@
           });
         });
       }
-    
-      // 4. Reset du formulaire après envoi
+
+      /* --------------------------------------------
+         4) Reset formulaire après envoi
+            - `viderFormulaire()` : attend 500ms puis reset le form
+            - le timeout permet à l'application mail native de s'ouvrir
+      -------------------------------------------- */
       function viderFormulaire() {
         setTimeout(function() {
           const form = document.getElementById("monFormulaire");
           if (form) form.reset();
-        }, 500); // 500ms pour laisser le temps à l'app mail de s'ouvrir
+        }, 500);
       }
+
+      /* --------------------------------------------
+         5) Animations d'entrée (staggered)
+            - Trouve un ensemble d'éléments importants et leur ajoute
+              la classe `fade-up` puis, avec un délai échelonné,
+              ajoute `animated` pour déclencher la transition CSS.
+            - La photo hero obtient une animation `float` après un délai
+            - Le système respecte `prefers-reduced-motion` (CSS gère cela)
+      -------------------------------------------- */
+      window.addEventListener('load', () => {
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 1) Appliquer fade-up à des éléments clés avec stagger
+        const selectors = ['header', '.hero', 'section', '.card', '.certification-card'];
+        const elements = [];
+        selectors.forEach(sel => document.querySelectorAll(sel).forEach(el => elements.push(el)));
+
+        elements.forEach((el, i) => {
+          el.classList.add('fade-up');
+          // si l'utilisateur demande moins d'animations, réduire les délais
+          const delay = prefersReduced ? 0 : 120 + i * 70;
+          setTimeout(() => el.classList.add('animated'), delay);
+        });
+
+        // 2) Animations de texte dans le hero (slide-in) et tags en stagger
+        const title = document.querySelector('.hero-title');
+        const subtitle = document.querySelector('.hero-subtitle');
+        const tags = document.querySelectorAll('.hero-tags .tag');
+
+        // Animations séquentielles des lignes du titre (une phrase après l'autre)
+        const heroLines = document.querySelectorAll('.hero-line');
+        let baseDelay = 220;
+        heroLines.forEach((line, idx) => {
+          line.classList.add('slide-left');
+          const delay = prefersReduced ? 0 : baseDelay + idx * 260;
+          setTimeout(() => line.classList.add('animated'), delay);
+        });
+
+        // Sous-titre : apparaît après les lignes du titre
+        if (subtitle) {
+          const subtitleDelay = prefersReduced ? 0 : baseDelay + heroLines.length * 260 + 120;
+          subtitle.classList.add('slide-right');
+          setTimeout(() => subtitle.classList.add('animated'), subtitleDelay);
+        }
+
+        // Tags : apparition échelonnée après le sous-titre
+        const tagsStart = prefersReduced ? 0 : baseDelay + heroLines.length * 260 + 260;
+        tags.forEach((tag, idx) => {
+          tag.classList.add('fade-in');
+          setTimeout(() => tag.classList.add('animated'), tagsStart + idx * 80);
+        });
+
+        // 3) Photo hero: float continu + parallax au survol/souris
+        const heroPhotoWrapper = document.querySelector('.hero-photo-wrapper');
+        const heroPhoto = document.querySelector('.hero-photo');
+        if (heroPhoto) setTimeout(() => heroPhoto.classList.add('animated'), prefersReduced ? 0 : 600);
+
+        // Parallax: uniquement si l'utilisateur n'a pas demandé de réduire les animations
+        if (!prefersReduced && heroPhotoWrapper) {
+          let rafId = null;
+          let targetX = 0, targetY = 0;
+          let posX = 0, posY = 0;
+
+          function loop() {
+            posX += (targetX - posX) * 0.12;
+            posY += (targetY - posY) * 0.12;
+            const img = heroPhotoWrapper.querySelector('img');
+            if (img) img.style.transform = `translate(${posX}px, ${posY}px) scale(1.02)`;
+            rafId = requestAnimationFrame(loop);
+          }
+
+          function onMove(e) {
+            const rect = heroPhotoWrapper.getBoundingClientRect();
+            const relX = ((e.clientX - rect.left) / rect.width) - 0.5; // -0.5 .. 0.5
+            const relY = ((e.clientY - rect.top) / rect.height) - 0.5;
+            targetX = relX * 18; // amplitude X
+            targetY = relY * 12; // amplitude Y
+            if (!rafId) rafId = requestAnimationFrame(loop);
+          }
+
+          function onLeave() {
+            targetX = 0; targetY = 0;
+          }
+
+          heroPhotoWrapper.addEventListener('mousemove', onMove);
+          heroPhotoWrapper.addEventListener('mouseleave', onLeave);
+          // démarrer une boucle propre si l'utilisateur utilise le clavier (focus)
+          heroPhotoWrapper.addEventListener('focus', () => { if (!rafId) rafId = requestAnimationFrame(loop); });
+        }
+      });
     </script>
   </body>
 </html>
